@@ -1,0 +1,119 @@
+import pandas as pd
+import numpy as np
+import re
+import gensim
+from pythainlp.tokenize import word_tokenize
+from pythainlp.corpus import thai_stopwords
+from gensim import corpora, models, similarities
+import pyLDAvis
+from pprint import pprint
+import pickle 
+import os
+import matplotlib.pyplot as plt
+from gensim.models import CoherenceModel
+from gensim.test.utils import datapath
+from gensim.models.ldamodel import LdaModel
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.decomposition import LatentDirichletAllocation
+from sklearn.feature_extraction.text import CountVectorizer
+import streamlit as st
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
+#set up session state via st.session_state so that app interactions don't reset the app.
+if not "valid_inputs_received" in st.session_state:
+    st.session_state["valid_inputs_received"] = False
+
+#load data
+with open('lda_model.pkl', 'rb') as f:
+    lda_model = pickle.load(f)
+corpus = gensim.corpora.MmCorpus('corpus.mm')
+data = pd.read_csv('dataset\DatasetLegal.csv')
+corpus_lda = lda_model[corpus]
+with open('id2word.pkl', 'rb') as f:
+    id2word = pickle.load(f)
+index = similarities.MatrixSimilarity(corpus_lda, num_features=len(id2word))
+
+
+topic_dict = {
+    0 : "Sentence",
+    1 : "Family",
+    2 : "Criminal",
+    3 : "Litigation",
+    4 : "Succession",
+    5 : "Contract",
+    6 : "Labor"
+}
+
+# preprocessing new document data
+def preprocess(text):
+    stopwords = list(thai_stopwords())
+    read_stopwords = pd.read_csv('dataset/add_stopwords.csv')
+    add_stopwords = read_stopwords['stopword'].values.tolist()
+    result = []
+    str_text = str(text).replace(' ','')
+    word_token = word_tokenize(str_text, engine='newmm')
+    for word in word_token:
+        if(word not in stopwords + add_stopwords):
+            result.append(word)
+        #result = map(lambda x: re.sub('[,/.?# ]', '', x), result)
+    return result
+
+# convert text from new document to bag of word
+def bow(text):
+  vector = id2word.doc2bow(text)
+  return vector
+
+
+
+def find_similar_docs(lda_model, corpus, index, new_doc_topics, data):
+    sims = index[new_doc_topics]
+    sims_sorted = sorted(enumerate(sims), key=lambda item: -item[1])
+    # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
+    for doc_id, similarity in sims_sorted[:5]:
+        st.write(f"Document ID: {doc_id}, Similarity score: {similarity*100} %")
+        st.write(data.answer[doc_id])
+        st.divider()
+        # st.write("Topic distribution for similar document : ")
+        # for num, dis in corpus_lda[doc_id]:
+        #     st.write(f"\t({topic_dict.get(num)}, {'%.5f' %dis})")
+
+def tagging(new_doc_topics):
+    option = []
+    for i, score in new_doc_topics:
+        if(score>=0.2):
+            option.append(topic_dict[i])
+    st.multiselect("Recomment tag!",
+                    option,
+                    option)
+
+#set up session state via st.session_state so that app interactions don't reset the app.
+if not "valid_inputs_received" in st.session_state:
+    st.session_state["valid_inputs_received"] = False
+
+############ title and header ############
+        
+st.set_page_config(
+    layout="centered", page_title="Tag Recommendation and Similarity Search"
+)
+st.caption("")
+st.title("Tag Recommendation and Similarity Search 🤗")
+
+############ sidebar ############
+st.sidebar.write("")
+
+############ TABBED NAVIGATION ############
+TagTab, SearchTab = st.tabs(["Tagging", "Searching"])
+
+with TagTab:
+    st.subheader("Tagging")
+
+
+#input from user
+st.write("Enter the document here :")
+input_doc = st.text_area("")
+if(input_doc):
+    new_doc = preprocess(input_doc)
+    new_doc = bow(new_doc)
+    new_doc_topics = lda_model.get_document_topics(new_doc)
+    tagging(new_doc_topics)
+    find_similar_docs(lda_model, corpus, index, new_doc_topics, data)
