@@ -58,16 +58,17 @@ def find_similar_docs(index, new_doc_topics, data):
     sims = index[new_doc_topics]
     sims_sorted = sorted(enumerate(sims), key=lambda item: -item[1])
     # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
-    
+    i = 0
     for doc_id, similarity in sims_sorted[:5]:
         st.write(f"Document ID: {doc_id}, Similarity score: {similarity*100} %")
         answer, question = st.columns(2)
+        i += 1
         with question:
-            st.write("question:")
-            st.write(data.question[doc_id])
+            with st.expander(f"question {i}:"):
+                st.write(data.question[doc_id])
         with answer:
-            st.write("answer:")
-            st.write(data.answer[doc_id])
+            with st.expander(f"answer {i}:"):
+                st.write(data.answer[doc_id])
         st.divider()
         # st.write("Topic distribution for similar document : ")
         # for num, dis in corpus_lda[doc_id]:
