@@ -24,16 +24,8 @@ with open('model/id2word.pkl', 'rb') as f:
     id2word = pickle.load(f)
 index = similarities.MatrixSimilarity(corpus_lda, num_features=len(id2word))
 
-
-topic_dict = {
-    0 : "Contract",
-    1 : "Family",
-    2 : "Labor",
-    3 : "Children",
-    4 : "Sentence",
-    5 : "lawyer",
-    6 : "Succession"
-}
+with open('model/topic_dict.pkl', 'rb') as f:
+    topic_dict = pickle.load(f)
 
 # preprocessing new document data
 def preprocess(text):
