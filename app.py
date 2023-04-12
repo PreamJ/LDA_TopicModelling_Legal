@@ -94,17 +94,16 @@ st.set_page_config(
     layout="centered", page_title="Tag Recommendation and Similarity Search"
 )
 st.caption("")
-st.title("Tag Recommendation")
-st.title("and")
-st.title("Similarity Search")
+st.title("Tag Recommendation and Similarity Search 🥺")
+
 #about app
 st.sidebar.write("")
 st.sidebar.write("More infomation about this app\n")
 st.sidebar.write("...")
 #report bugs
 st.sidebar.write("report bug")
-with st.sidebar.container:
-    st.sidebar.write("")
+with st.sidebar.container():
+    st.sidebar.write("#")
 st.sidebar.write("App created by [Pream J](https://github.com/PreamJ)")
 
 
