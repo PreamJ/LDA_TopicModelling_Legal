@@ -1,7 +1,6 @@
 pandas
 numpy
-numpy
 pythainlp
-pickle
+pickle-mixin
 
 
