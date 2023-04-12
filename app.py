@@ -51,14 +51,14 @@ def find_similar_docs(index, new_doc_topics, data):
     sims_sorted = sorted(enumerate(sims), key=lambda item: -item[1])
     # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
     i = 0
-    for doc_id, similarity in sims_sorted[:5]:
+    for doc_id, similarity in sims_sorted[:10]:
         st.write(f"Document ID: {doc_id}, Similarity score: {similarity*100} %")
-        answer, question = st.columns(2)
+        question, answer = st.columns(2)
         i += 1
         with question:
             with st.expander(f"question {i}:"):
                 st.write(data.question[doc_id])
-        with answer:
+        with answer: 
             with st.expander(f"answer {i}:"):
                 st.write(data.answer[doc_id])
         st.divider()
@@ -93,9 +93,14 @@ st.set_page_config(
 )
 st.caption("")
 st.title("Tag Recommendation and Similarity Search 🤗")
-
-############ sidebar ############
+#about app
 st.sidebar.write("")
+st.sidebar.write("More infomation about this app\n")
+st.sidebar.write("...")
+#report bug
+
+
+
 
 ############ TABBED NAVIGATION ############
 TagTab, SearchTab = st.tabs(["Tagging", "Searching"])
