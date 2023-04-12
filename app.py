@@ -99,7 +99,7 @@ st.title("Tag Recommendation and Similarity Search 😎")
 #about app
 st.sidebar.write("")
 st.sidebar.write("More infomation about this app\n")
-st.sidebar.write("...")
+st.sidebar.write("This application is designed to exclusively operate with data pertaining to laws.")
 
 #report bugs
 st.sidebar.write("report bug")
