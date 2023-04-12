@@ -100,6 +100,7 @@ st.title("Tag Recommendation and Similarity Search 🥺")
 st.sidebar.write("")
 st.sidebar.write("More infomation about this app\n")
 st.sidebar.write("...")
+
 #report bugs
 st.sidebar.write("report bug")
 with st.sidebar.container():
@@ -121,7 +122,7 @@ with TagTab:
         """
         )
         #input from user
-        input_doc = st.text_area("", help="Paste the document here")
+        input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below")
         uploaded_file = st.file_uploader("Choose a file")
         submit_button = st.form_submit_button(label="Submit")
         
