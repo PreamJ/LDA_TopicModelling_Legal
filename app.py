@@ -4,17 +4,18 @@ import gensim
 from pythainlp.tokenize import word_tokenize
 from pythainlp.corpus import thai_stopwords
 from gensim import similarities
-import pickle 
+import pickle
 import streamlit as st
 import time
-
+import mymodule
+from io import StringIO
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 #set up session state via st.session_state so that app interactions don't reset the app.
 if not "valid_inputs_received" in st.session_state:
     st.session_state["valid_inputs_received"] = False
 
-#load data
+############ load data ############
 with open('model/lda_model.pkl', 'rb') as f:
     lda_model = pickle.load(f)
 corpus = gensim.corpora.MmCorpus('model/corpus.mm')
@@ -27,57 +28,58 @@ index = similarities.MatrixSimilarity(corpus_lda, num_features=len(id2word))
 with open('model/topic_dict.pkl', 'rb') as f:
     topic_dict = pickle.load(f)
 
+
 # preprocessing new document data
-def preprocess(text):
-    stopwords = list(thai_stopwords())
-    read_stopwords = pd.read_csv('dataset/add_stopwords.csv')
-    add_stopwords = read_stopwords['stopword'].values.tolist()
-    result = []
-    str_text = str(text).replace(' ','')
-    word_token = word_tokenize(str_text, engine='newmm')
-    for word in word_token:
-        if(word not in stopwords + add_stopwords):
-            result.append(word)
-        #result = map(lambda x: re.sub('[,/.?# ]', '', x), result)
-    return result
+# def preprocess(text):
+#     stopwords = list(thai_stopwords())
+#     read_stopwords = pd.read_csv('dataset/add_stopwords.csv')
+#     add_stopwords = read_stopwords['stopword'].values.tolist()
+#     result = []
+#     str_text = str(text).replace(' ','')
+#     word_token = word_tokenize(str_text, engine='newmm')
+#     for word in word_token:
+#         if(word not in stopwords + add_stopwords):
+#             result.append(word)
+#         #result = map(lambda x: re.sub('[,/.?# ]', '', x), result)
+#     return result
 
-# convert text from new document to bag of word
-def bow(text):
-  vector = id2word.doc2bow(text)
-  return vector
+# # convert text from new document to bag of word
+# def bow(text):
+#   vector = id2word.doc2bow(text)
+#   return vector
 
-def find_similar_docs(index, new_doc_topics, data):
-    sims = index[new_doc_topics]
-    sims_sorted = sorted(enumerate(sims), key=lambda item: -item[1])
-    # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
-    i = 0
-    for doc_id, similarity in sims_sorted[:10]:
-        st.write(f"Document ID: {doc_id}, Similarity score: {similarity*100} %")
-        question, answer = st.columns(2)
-        i += 1
-        with question:
-            with st.expander(f"question {i}:"):
-                st.write(data.question[doc_id])
-        with answer: 
-            with st.expander(f"answer {i}:"):
-                st.write(data.answer[doc_id])
-        st.divider()
-        # st.write("Topic distribution for similar document : ")
-        # for num, dis in corpus_lda[doc_id]:
-        #     st.write(f"\t({topic_dict.get(num)}, {'%.5f' %dis})")
+# def find_similar_docs(index, new_doc_topics, data):
+#     sims = index[new_doc_topics]
+#     sims_sorted = sorted(enumerate(sims), key=lambda item: -item[1])
+#     # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
+#     i = 0
+#     for doc_id, similarity in sims_sorted[:10]:
+#         st.write(f"Document ID: {doc_id}, Similarity score: {similarity*100} %")
+#         question, answer = st.columns(2)
+#         i += 1
+#         with question:
+#             with st.expander(f"question {i}:"):
+#                 st.write(data.question[doc_id])
+#         with answer: 
+#             with st.expander(f"answer {i}:"):
+#                 st.write(data.answer[doc_id])
+#         st.divider()
+#         # st.write("Topic distribution for similar document : ")
+#         # for num, dis in corpus_lda[doc_id]:
+#         #     st.write(f"\t({topic_dict.get(num)}, {'%.5f' %dis})")
 
-def tagging(new_doc_topics):
-    option = []
-    # latest_iteration = st.empty()
-    # bar = st.progress(0)
-    for i, score in new_doc_topics:
-        # bar.progress(i)
-        time.sleep(0.1)
-        if(score>=0.2):
-            option.append(topic_dict[i])
-    st.multiselect("Recomment tag!",
-                    option,
-                    option)
+# def tagging(new_doc_topics):
+#     option = []
+#     # latest_iteration = st.empty()
+#     # bar = st.progress(0)
+#     for i, score in new_doc_topics:
+#         # bar.progress(i)
+#         time.sleep(0.1)
+#         if(score>=0.2):
+#             option.append(topic_dict[i])
+#     st.multiselect("Recomment tag!",
+#                     option,
+#                     option)
 
 
 ############ start with streamlit ############
@@ -92,14 +94,18 @@ st.set_page_config(
     layout="centered", page_title="Tag Recommendation and Similarity Search"
 )
 st.caption("")
-st.title("Tag Recommendation and Similarity Search 🤗")
+st.title("Tag Recommendation")
+st.title("and")
+st.title("Similarity Search")
 #about app
 st.sidebar.write("")
 st.sidebar.write("More infomation about this app\n")
 st.sidebar.write("...")
-#report bug
-
-
+#report bugs
+st.sidebar.write("report bug")
+with st.sidebar.container:
+    st.sidebar.write("")
+st.sidebar.write("App created by [Pream J](https://github.com/PreamJ)")
 
 
 ############ TABBED NAVIGATION ############
@@ -117,13 +123,13 @@ with TagTab:
         )
         #input from user
         input_doc = st.text_area("", help="Paste the document here")
+        uploaded_file = st.file_uploader("Choose a file")
         submit_button = st.form_submit_button(label="Submit")
-
+        
         if submit_button:
-            new_doc = preprocess(input_doc)
-            new_doc = bow(new_doc)
+            new_doc = mymodule.preprocess(input_doc)
             new_doc_topics = lda_model.get_document_topics(new_doc)
-            tagging(new_doc_topics)
+            mymodule.tagging(new_doc_topics)
 
 with SearchTab:
     with st.form(key="search_form"):
@@ -136,10 +142,10 @@ with SearchTab:
         )
         #input from user
         input_doc = st.text_area("", help="Paste the document here")
+        uploaded_file = st.file_uploader("Choose a file")
         submit_button = st.form_submit_button(label="Search")
 
         if submit_button:
-            new_doc = preprocess(input_doc)
-            new_doc = bow(new_doc)
+            new_doc = mymodule.preprocess(input_doc)
             new_doc_topics = lda_model.get_document_topics(new_doc)
-            find_similar_docs(index, new_doc_topics, data)
+            mymodule.find_similar_docs(index, new_doc_topics, data)
