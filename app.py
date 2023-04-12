@@ -94,7 +94,7 @@ st.set_page_config(
     layout="centered", page_title="Tag Recommendation and Similarity Search"
 )
 st.caption("")
-st.title("Tag Recommendation and Similarity Search 🥺")
+st.title("Tag Recommendation and Similarity Search 😎")
 
 #about app
 st.sidebar.write("")
