@@ -68,7 +68,11 @@ def find_similar_docs(index, new_doc_topics, data):
 
 def tagging(new_doc_topics):
     option = []
+    # latest_iteration = st.empty()
+    # bar = st.progress(0)
     for i, score in new_doc_topics:
+        # bar.progress(i)
+        time.sleep(0.1)
         if(score>=0.2):
             option.append(topic_dict[i])
     st.multiselect("Recomment tag!",

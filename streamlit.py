@@ -1,10 +1,16 @@
 import streamlit as st
-import numpy as np
+import time
 
-with st.container():
-   st.write("This is inside the container")
+'Starting a long computation...'
 
-   # You can call any Streamlit command, including custom components:
-   st.bar_chart(np.random.randn(50, 3))
+# Add a placeholder
+latest_iteration = st.empty()
+bar = st.progress(0)
 
-st.write("This is outside the container")
+for i in range(100):
+  # Update the progress bar with each iteration.
+  latest_iteration.text(f'Iteration {i+1}')
+  bar.progress(i + 1)
+  time.sleep(0.1)
+
+'...and now we\'re done!'
