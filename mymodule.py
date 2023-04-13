@@ -28,16 +28,23 @@ def find_similar_docs(index, new_doc_topics, data):
     sims_sorted = sorted(enumerate(sims), key=lambda item: -item[1])
     # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
     i = 0
-    for doc_id, similarity in sims_sorted[:10]:
+    for doc_id, similarity in sims_sorted[:50]:
         st.write(f"Document ID: {doc_id}, Similarity score: {similarity*100} %")
-        question, answer = st.columns(2)
+        
         i += 1
-        with question:
-            with st.expander(f"question {i}:"):
-                st.write(data.question[doc_id])
-        with answer: 
-            with st.expander(f"answer {i}:"):
-                st.write(data.answer[doc_id])
+        # question, answer = st.columns(2)
+        with st.expander(f"Document {i}:"):
+            # with question:
+            st.write("**Question**")
+            st.write(data.question[doc_id])
+        # with answer:
+            st.write("**Answer**")
+            st.write(data.answer[doc_id])
+        # with question:
+        #     with st.expander(f"question {i}:"):
+                
+        # with answer: 
+        #     with st.expander(f"answer {i}:"):
         st.divider()
 
 def tagging(new_doc_topics):
@@ -47,6 +54,9 @@ def tagging(new_doc_topics):
     for i, score in new_doc_topics:
         if(score>=0.2):
             option.append(topic_dict[i])
-    st.multiselect("Recomment tag!",
+    st.multiselect("Recommended tag!",
                     option,
                     option)
+    # label_tags = st_tag(
+
+    # )
