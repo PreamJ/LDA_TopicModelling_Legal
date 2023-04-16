@@ -142,7 +142,7 @@ with SearchTab:
         )
         #input from user
         input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below")
-        uploaded_file = st.file_uploader("or choose a file")
+        uploaded_file = st.file_uploader("Choose a file")
         submit_button = st.form_submit_button(label="Search")
 
         if submit_button:

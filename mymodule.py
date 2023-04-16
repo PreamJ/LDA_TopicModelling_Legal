@@ -6,18 +6,6 @@ from pythainlp.corpus import thai_stopwords
 from gensim import similarities
 import pickle
 import streamlit as st
-import docx2txt
-
-def read_txt_file(file_path):
-    with open(file_path, 'r') as f:
-        text = f.read()
-    return text
-
-def read_doc_file(file_path):
-    text = docx2txt.process(file_path)
-    return text
-
-# def read_input_file()
 
 def preprocess(text):
     with open('model/id2word.pkl', 'rb') as f:
@@ -42,6 +30,7 @@ def find_similar_docs(index, new_doc_topics, data):
     i = 0
     for doc_id, similarity in sims_sorted[:50]:
         st.write(f"Document ID: {doc_id}, Similarity score: {similarity*100} %")
+        
         i += 1
         # question, answer = st.columns(2)
         with st.expander(f"Document {i}:"):
