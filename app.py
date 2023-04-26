@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 import gensim
-from pythainlp.tokenize import word_tokenize
-from pythainlp.corpus import thai_stopwords
 from gensim import similarities
 import pickle
 import streamlit as st
@@ -18,7 +16,7 @@ if not "valid_inputs_received" in st.session_state:
 ############ load data ############
 with open('model/lda_model.pkl', 'rb') as f:
     lda_model = pickle.load(f)
-corpus = gensim.corpora.MmCorpus('model/corpus.mm')
+corpus = gensim.corpora.MmCorpus('model/corpus_question.mm')
 data = pd.read_csv('dataset/DatasetLegal.csv')
 corpus_lda = lda_model[corpus]
 with open('model/id2word.pkl', 'rb') as f:
@@ -27,6 +25,9 @@ index = similarities.MatrixSimilarity(corpus_lda, num_features=len(id2word))
 
 with open('model/topic_dict.pkl', 'rb') as f:
     topic_dict = pickle.load(f)
+
+
+e = RuntimeError('#')
 
 
 # preprocessing new document data
@@ -98,14 +99,17 @@ st.title("Tag Recommendation and Similarity Search 😎")
 
 #about app
 st.sidebar.write("")
-st.sidebar.write("More infomation about this app\n")
+st.sidebar.write("**More infomation about this app**\n")
 st.sidebar.write("This application is designed to exclusively operate with data pertaining to laws.")
-
+st.sidebar.divider()
 #report bugs
-st.sidebar.write("report bug")
+st.sidebar.write("**report bug**")
 with st.sidebar.container():
+    if(e):
+        st.info('Bug Reporting')
     st.sidebar.write("#")
-st.sidebar.write("App created by [Pream J](https://github.com/PreamJ)")
+st.sidebar.divider()
+st.sidebar.caption("App created by [Pream J](https://github.com/PreamJ)")
 
 
 ############ TABBED NAVIGATION ############
@@ -123,12 +127,16 @@ with TagTab:
         )
         #input from user
         input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below")
+        file = open("dataset\input_text.txt", "a")
+        file.write(input_doc)
+        file.close()
         uploaded_file = st.file_uploader("Choose a file")
         submit_button = st.form_submit_button(label="Submit")
         
         if submit_button:
             new_doc = mymodule.preprocess(input_doc)
             new_doc_topics = lda_model.get_document_topics(new_doc)
+            # st.success('This is a success message!', icon="✅")
             mymodule.tagging(new_doc_topics)
 
 with SearchTab:
@@ -147,5 +155,8 @@ with SearchTab:
 
         if submit_button:
             new_doc = mymodule.preprocess(input_doc)
+
             new_doc_topics = lda_model.get_document_topics(new_doc)
+            # st.success('This is a success message!', icon="✅")
             mymodule.find_similar_docs(index, new_doc_topics, data)
+
