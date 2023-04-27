@@ -37,10 +37,11 @@ def find_similar_docs(index, new_doc_topics, data):
             # with question:
             st.write("**Question**")
             st.write(data.question[doc_id])
-        # with answer:
+            st.divider()
+            # with answer:
             st.write("**Answer**")
             st.write(data.answer[doc_id])
-        # with question:
+            # with question:
         #     with st.expander(f"question {i}:"):
                 
         # with answer: 
