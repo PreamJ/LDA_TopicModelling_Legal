@@ -127,10 +127,10 @@ with TagTab:
         )
         #input from user
         input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below")
-        file = open("dataset\input_text.txt", "a", encoding="utf-8")
-        file.write(input_doc)
-        file.write("\n")
-        file.close()
+        # file = open("dataset\input_text.txt", "a", encoding="utf-8")
+        # file.write(input_doc)
+        # file.write("\n")
+        # file.close()
         uploaded_file = st.file_uploader("Choose a file")
         submit_button = st.form_submit_button(label="Submit")
         
