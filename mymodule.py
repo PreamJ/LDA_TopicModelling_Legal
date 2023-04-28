@@ -59,6 +59,7 @@ def tagging(new_doc_topics):
     st.multiselect("Recommended tag!",
                     option,
                     option)
+
     # label_tags = st_tag(
 
     # )
