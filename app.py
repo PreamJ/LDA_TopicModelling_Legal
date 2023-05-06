@@ -101,13 +101,13 @@ st.title("Tag Recommendation and Similarity Search 😎")
 st.sidebar.write("")
 st.sidebar.write("**More infomation about this app**\n")
 st.sidebar.write("This application is designed to exclusively operate with data pertaining to laws.")
-st.sidebar.divider()
+# st.sidebar.divider()
 #report bugs
-st.sidebar.write("**report bug**")
-with st.sidebar.container():
-    if(e):
-        st.info('Bug Reporting')
-    st.sidebar.write("#")
+# st.sidebar.write("**report bug**")
+# with st.sidebar.container():
+#     if(e):
+#         st.info('Bug Reporting')
+    # st.sidebar.write("#")
 st.sidebar.divider()
 st.sidebar.caption("App created by [Pream J](https://github.com/PreamJ)")
 
@@ -131,7 +131,7 @@ with TagTab:
         # file.write(input_doc)
         # file.write("\n")
         # file.close()
-        uploaded_file = st.file_uploader("Choose a file")
+        # uploaded_file = st.file_uploader("Choose a file")
         submit_button = st.form_submit_button(label="Submit")
         
         if submit_button:
@@ -155,7 +155,7 @@ with SearchTab:
         # file.write(input_doc)
         # file.write("\n")
         # file.close()
-        uploaded_file = st.file_uploader("Choose a file")
+        # uploaded_file = st.file_uploader("Choose a file")
         submit_button = st.form_submit_button(label="Search")
 
         if submit_button:
