@@ -100,7 +100,7 @@ st.title("Tag Recommendation and Similarity Search 😎")
 #about app
 st.sidebar.write("")
 st.sidebar.write("**More infomation about this app**\n")
-st.sidebar.write("This application is designed to exclusively operate with data pertaining to laws.")
+st.sidebar.write("This application is designed to exclusively operate with data pertaining to laws only in Thai language.")
 # st.sidebar.divider()
 #report bugs
 # st.sidebar.write("**report bug**")
