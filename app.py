@@ -14,7 +14,7 @@ if not "valid_inputs_received" in st.session_state:
     st.session_state["valid_inputs_received"] = False
 
 ############ load data ############
-with open('model/lda_model.pkl', 'rb') as f:
+with open('lda/lda_model_5.pkl', 'rb') as f:
     lda_model = pickle.load(f)
 corpus = gensim.corpora.MmCorpus('model/corpus_question.mm')
 data = pd.read_csv('dataset/DatasetLegal.csv')
@@ -23,7 +23,7 @@ with open('model/id2word.pkl', 'rb') as f:
     id2word = pickle.load(f)
 index = similarities.MatrixSimilarity(corpus_lda, num_features=len(id2word))
 
-with open('model/topic_dict.pkl', 'rb') as f:
+with open('lda/topic_dict_5.pkl', 'rb') as f:
     topic_dict = pickle.load(f)
 
 
