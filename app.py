@@ -16,11 +16,12 @@ if not "valid_inputs_received" in st.session_state:
 ############ load data ############
 with open('lda/lda_model_5.pkl', 'rb') as f:
     lda_model = pickle.load(f)
-corpus = gensim.corpora.MmCorpus('model/corpus_question.mm')
+corpus_question = gensim.corpora.MmCorpus('corpus_question.mm')
 data = pd.read_csv('dataset/DatasetLegal.csv')
-corpus_lda = lda_model[corpus]
+corpus_lda = lda_model[corpus_question]
 with open('model/id2word.pkl', 'rb') as f:
     id2word = pickle.load(f)
+
 index = similarities.MatrixSimilarity(corpus_lda, num_features=len(id2word))
 
 with open('lda/topic_dict_5.pkl', 'rb') as f:

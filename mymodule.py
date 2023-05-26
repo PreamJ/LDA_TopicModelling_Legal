@@ -50,7 +50,7 @@ def find_similar_docs(index, new_doc_topics, data):
         st.divider()
 
 def tagging(new_doc_topics):
-    with open('model/topic_dict.pkl', 'rb') as f:
+    with open('lda/topic_dict_5.pkl', 'rb') as f:
         topic_dict = pickle.load(f)
     option = []
     for i, score in new_doc_topics:
