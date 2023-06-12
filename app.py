@@ -96,9 +96,9 @@ st.set_page_config(
     layout="centered", page_title="Tag Recommendation and Similarity Search"
 )
 st.caption("")
-st.title("Tag & Search :Legal")
-st.subheader("Tag Recommendation and Similarity Search 😎")
-
+# st.title("Tag & Search :Legal")
+# st.subheader("Tag Recommendation and Similarity Search 😎")
+st.title("Tag Recommendation and Similarity Search 😎")
 #about app
 st.sidebar.write("")
 st.sidebar.write("**More infomation about this app**\n")
