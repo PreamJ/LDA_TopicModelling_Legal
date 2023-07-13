@@ -117,30 +117,28 @@ st.sidebar.caption("App created by [Pream J](https://github.com/PreamJ)")
 ########### TABBED NAVIGATION ############
 TagTab, SearchTab = st.tabs(["Tagging", "Searching"])
 
-with TagTab:
+with st.form(key="tag_form"):
+    st.write("")
+    st.markdown(
+    """
+    Tagging Recommendation\n
+    Enter the document here:
+    """
+    )
+    #input from user
+    input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below")
+    # file = open("dataset\input_text.txt", "a", encoding="utf-8")
+    # file.write(input_doc)
+    # file.write("\n")
+    # file.close()
+    # uploaded_file = st.file_uploader("Choose a file")
+    submit_button = st.form_submit_button(label="Submit")
     
-    with st.form(key="tag_form"):
-        st.write("")
-        st.markdown(
-        """
-        Tagging Recommendation\n
-        Enter the document here:
-        """
-        )
-        #input from user
-        input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below")
-        # file = open("dataset\input_text.txt", "a", encoding="utf-8")
-        # file.write(input_doc)
-        # file.write("\n")
-        # file.close()
-        # uploaded_file = st.file_uploader("Choose a file")
-        submit_button = st.form_submit_button(label="Submit")
-        
-        if submit_button:
-            new_doc = mymodule.preprocess(input_doc)
-            new_doc_topics = lda_model.get_document_topics(new_doc)
-            # st.success('This is a success message!', icon="✅")
-            mymodule.tagging(new_doc_topics)
+    if submit_button:
+        new_doc = mymodule.preprocess(input_doc)
+        new_doc_topics = lda_model.get_document_topics(new_doc)
+        # st.success('This is a success message!', icon="✅")
+        mymodule.tagging(new_doc_topics)
 
 with SearchTab:
     with st.form(key="search_form"):
