@@ -22,7 +22,8 @@ corpus_lda = lda_model[corpus_question]
 with open('model/id2word.pkl', 'rb') as f:
     id2word = pickle.load(f)
 
-index = similarities.MatrixSimilarity(corpus_lda, num_features=len(id2word))
+index_lda = similarities.MatrixSimilarity(corpus_lda, num_features=len(id2word))
+index_bow = similarities.MatrixSimilarity(corpus_question)
 
 with open('lda/topic_dict_5.pkl', 'rb') as f:
     topic_dict = pickle.load(f)
@@ -164,7 +165,7 @@ with SearchTab:
 
             new_doc_topics = lda_model.get_document_topics(new_doc)
             # st.success('This is a success message!', icon="✅")
-            mymodule.find_similar_docs(index, new_doc_topics, data)
+            mymodule.find_similar_docs(index_lda, index_bow, new_doc_topics, data)
 
 # with st.form(key="tag_form"):
 #     st.write("")

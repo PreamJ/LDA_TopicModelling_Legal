@@ -23,9 +23,27 @@ def preprocess(text):
     vector = id2word.doc2bow(result)
     return vector
 
-def find_similar_docs(index, new_doc_topics, data):
-    sims = index[new_doc_topics]
-    sims_sorted = sorted(enumerate(sims), key=lambda item: -item[1])
+def find_similar_docs(index_lda, index_bow, new_doc_topics, data):
+    '''
+    def topic_keyword_based(new_doc):
+        new_doc_topics = id2word.doc2bow(preprocess(new_doc))
+        lda_topics = lda_model.get_document_topics(new_doc_topics)
+        sims_lda = index_lda[lda_topics]
+        sims_bow = index_bow[new_doc_topics]
+        max_lda = max(sims_lda)
+        max_bow = max(sims_bow)
+        weight = max_lda/max_bow
+        sum = sims_lda+(sims_bow*weight)
+        sims_sorted = sorted(enumerate(sum), key=lambda item: -item[1])
+        return sims_sorted
+    '''
+    sims_lda = index_lda[new_doc_topics]
+    sims_bow = index_bow[new_doc_topics]
+    max_lda = max(sims_lda)
+    max_bow = max(sims_bow)
+    weight = max_lda/max_bow
+    sum = sims_lda+(sims_bow*weight)
+    sims_sorted = sorted(enumerate(sum), key=lambda item: -item[1])
     # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
     i = 0
     for doc_id, similarity in sims_sorted[:5]:
