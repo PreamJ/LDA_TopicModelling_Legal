@@ -43,7 +43,8 @@ def find_similar_docs(index_lda, index_bow, new_doc_topics, data):
     max_bow = max(sims_bow)
     weight = max_lda/max_bow
     sum = sims_lda+(sims_bow*weight)
-    sims_sorted = sorted(enumerate(sum), key=lambda item: -item[1])
+    # sims_sorted = sorted(enumerate(sum), key=lambda item: -item[1])
+    sims_sorted = sorted(enumerate(sims_lda), key=lambda item: -item[1])
     # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
     i = 0
     for doc_id, similarity in sims_sorted[:5]:
