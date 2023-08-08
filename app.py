@@ -94,12 +94,14 @@ if not "valid_inputs_received" in st.session_state:
 ############ title and header ############
         
 st.set_page_config(
-    layout="centered", page_title="Tag Recommendation and Similarity Search"
+    layout="centered", page_title="LegalTASK"
 )
 st.caption("")
 # st.title("Tag & Search :Legal")
 # st.subheader("Tag Recommendation and Similarity Search 😎")
-st.title("Tag Recommendation and Similarity Search")
+st.title("LegalTASK🏷️")
+st.subheader("Tagging And Searching Knowledge based legal")
+st.write("Tag recommendation and Similarity search system")
 #about app
 st.sidebar.write("")
 st.sidebar.write("**More infomation about this app**\n")
