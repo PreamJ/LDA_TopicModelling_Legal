@@ -99,8 +99,10 @@ st.set_page_config(
 st.caption("")
 # st.title("Tag & Search :Legal")
 # st.subheader("Tag Recommendation and Similarity Search 😎")
+# st.title('<p style="color: red;">LegalTASK🏷️</p>')
+# st.title('<p style="color: red;">LegalTASK</p>', unsafe_allow_html=True)
 st.title("LegalTASK🏷️")
-st.subheader("Tagging And Searching Knowledge based legal")
+st.subheader("Tagging and Searching Knowledge based Legal")
 st.write("Tag recommendation and Similarity search system")
 #about app
 st.sidebar.write("")
