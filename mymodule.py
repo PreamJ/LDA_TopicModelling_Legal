@@ -23,6 +23,33 @@ def preprocess(text):
     vector = id2word.doc2bow(result)
     return vector
 
+class MinMaxScaler:
+    def __init__(self, feature_range=(0, 1)):
+        self.feature_range = feature_range
+        self.min_val = None
+        self.max_val = None
+
+    def fit(self, data):
+        self.min_val = min(data)
+        self.max_val = max(data)
+
+    def transform(self, data):
+        if self.min_val is None or self.max_val is None:
+            raise ValueError("Scaler has not been fitted. Call fit() first.")
+
+        scaled_data = []
+        for value in data:
+            scaled_value = (value - self.min_val) / (self.max_val - self.min_val) * (
+                    self.feature_range[1] - self.feature_range[0]
+            ) + self.feature_range[0]
+            scaled_data.append(scaled_value)
+
+        return scaled_data
+
+    def fit_transform(self, data):
+        self.fit(data)
+        return self.transform(data)
+
 def find_similar_docs(index_lda, index_bow, new_doc_topics, data):
     '''
     def topic_keyword_based(new_doc):
@@ -39,16 +66,20 @@ def find_similar_docs(index_lda, index_bow, new_doc_topics, data):
     '''
     sims_lda = index_lda[new_doc_topics]
     sims_bow = index_bow[new_doc_topics]
-    max_lda = max(sims_lda)
-    max_bow = max(sims_bow)
-    weight = max_lda/max_bow
-    sum = sims_lda+(sims_bow*3)
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    scaled_lda = scaler.fit_transform(sims_lda)
+    scaled_bow = scaler.fit_transform(sims_bow)
+    # sum_result = [x + y for x, y in zip(scaled_data, scaled_data)]
+    sum = [x+y for x,y in zip(scaled_lda, scaled_bow)]
+    # max_lda = max(sims_lda)
+    # max_bow = max(sims_bow)
+    # sum = sims_lda+(sims_bow*3)
     sims_sorted = sorted(enumerate(sum), key=lambda item: -item[1])
     # sims_sorted = sorted(enumerate(sims_lda), key=lambda item: -item[1])
     # sims_sorted = sorted(enumerate(sims_bow), key=lambda item: -item[1])
     # st.write(f"Topic distribution for new document : {new_doc_topics}\n{new_doc}\n")
     i = 0
-    for doc_id, similarity in sims_sorted[1:10]:
+    for doc_id, similarity in sims_sorted[0:10]:
         # st.write(f"Document ID: {doc_id}, Similarity score: {similarity*100} %")
         st.write(f"Document ID: {doc_id}")
         
