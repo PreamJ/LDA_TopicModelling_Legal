@@ -132,7 +132,8 @@ with TagTab:
         """
         )
         #input from user
-        input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below")
+        input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below"
+                                 , placeholder="อยากสอบถามเรื่องกฎหมายมรดกซึ่งมีย่าเป็นเจ้าของมรดกซึ่งย่าไม่ได้ทำพินัยกรรมไว้ เมื่อย่าเสียชีวิตแล้วมีบุตรสองคนคือคุณพ่อที่เสียชีวิตแล้ว และอาผู้ชายพึ่งเสียชีวิต โดยที่พ่อและอามีภรรยาที่จดทะเบียนถูกต้องตามกฎหมาย พ่อมีบุตรสาวหนึ่งคนคือข้าพเจ้าและอามีบุตรสามคน อยากถามว่าจะแบ่งมรดกอย่างไร")
         # file = open("dataset\input_text.txt", "a", encoding="utf-8")
         # file.write(input_doc)
         # file.write("\n")
@@ -156,7 +157,7 @@ with SearchTab:
         """
         )
         #input from user
-        input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below")
+        input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below", placeholder="อยากสอบถามเรื่องกฎหมายมรดกซึ่งมีย่าเป็นเจ้าของมรดกซึ่งย่าไม่ได้ทำพินัยกรรมไว้ เมื่อย่าเสียชีวิตแล้วมีบุตรสองคนคือคุณพ่อที่เสียชีวิตแล้ว และอาผู้ชายพึ่งเสียชีวิต โดยที่พ่อและอามีภรรยาที่จดทะเบียนถูกต้องตามกฎหมาย พ่อมีบุตรสาวหนึ่งคนคือข้าพเจ้าและอามีบุตรสามคน อยากถามว่าจะแบ่งมรดกอย่างไร")
         # file = open("dataset\input_text.txt", "a", encoding="utf-8")
         # file.write(input_doc)
         # file.write("\n")
