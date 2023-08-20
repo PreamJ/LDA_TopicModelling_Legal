@@ -128,12 +128,13 @@ with TagTab:
         st.markdown(
         """
         Tagging Recommendation\n
-        Enter the document here:
+        Enter the document for which you would like to add tags:
         """
         )
         #input from user
-        input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below"
-                                 , placeholder="ex. อยากสอบถามเรื่องกฎหมายมรดกซึ่งมีย่าเป็นเจ้าของมรดกซึ่งย่าไม่ได้ทำพินัยกรรมไว้ เมื่อย่าเสียชีวิตแล้วมีบุตรสองคนคือคุณพ่อที่เสียชีวิตแล้ว และอาผู้ชายพึ่งเสียชีวิต โดยที่พ่อและอามีภรรยาที่จดทะเบียนถูกต้องตามกฎหมาย พ่อมีบุตรสาวหนึ่งคนคือข้าพเจ้าและอามีบุตรสามคน อยากถามว่าจะแบ่งมรดกอย่างไร")
+        input_doc = st.text_area("", help="Paste your text doucument in the section below. Longer input leading to better output"
+                                 , placeholder="Example: อยากสอบถามเรื่องกฎหมายมรดกซึ่งมีย่าเป็นเจ้าของมรดกซึ่งย่าไม่ได้ทำพินัยกรรมไว้ เมื่อย่าเสียชีวิตแล้วมีบุตรสองคนคือคุณพ่อที่เสียชีวิตแล้ว และอาผู้ชายพึ่งเสียชีวิต โดยที่พ่อและอามีภรรยาที่จดทะเบียนถูกต้องตามกฎหมาย พ่อมีบุตรสาวหนึ่งคนคือข้าพเจ้าและอามีบุตรสามคน อยากถามว่าจะแบ่งมรดกอย่างไร ..."
+                                 , height=200)
         # file = open("dataset\input_text.txt", "a", encoding="utf-8")
         # file.write(input_doc)
         # file.write("\n")
@@ -153,12 +154,13 @@ with SearchTab:
         st.markdown(
         """
         Similarity Search\n
-        Enter the document here:
+        Enter the query for which you would like to discover similar documents:
         """
         )
         #input from user
-        input_doc = st.text_area("", help="Paste you text doucument or upload you document file in the section below"
-                                 , placeholder="ex. อยากสอบถามเรื่องกฎหมายมรดกซึ่งมีย่าเป็นเจ้าของมรดกซึ่งย่าไม่ได้ทำพินัยกรรมไว้ เมื่อย่าเสียชีวิตแล้วมีบุตรสองคนคือคุณพ่อที่เสียชีวิตแล้ว และอาผู้ชายพึ่งเสียชีวิต โดยที่พ่อและอามีภรรยาที่จดทะเบียนถูกต้องตามกฎหมาย พ่อมีบุตรสาวหนึ่งคนคือข้าพเจ้าและอามีบุตรสามคน อยากถามว่าจะแบ่งมรดกอย่างไร")
+        input_doc = st.text_area("", help="Paste your text doucument in the section below. Longer input leading to better output"
+                                 , placeholder="Example: อยากสอบถามเรื่องกฎหมายมรดกซึ่งมีย่าเป็นเจ้าของมรดกซึ่งย่าไม่ได้ทำพินัยกรรมไว้ เมื่อย่าเสียชีวิตแล้วมีบุตรสองคนคือคุณพ่อที่เสียชีวิตแล้ว และอาผู้ชายพึ่งเสียชีวิต โดยที่พ่อและอามีภรรยาที่จดทะเบียนถูกต้องตามกฎหมาย พ่อมีบุตรสาวหนึ่งคนคือข้าพเจ้าและอามีบุตรสามคน อยากถามว่าจะแบ่งมรดกอย่างไร ..."
+                                 , height=200)
         # file = open("dataset\input_text.txt", "a", encoding="utf-8")
         # file.write(input_doc)
         # file.write("\n")
