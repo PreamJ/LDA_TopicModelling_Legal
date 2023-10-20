@@ -63,7 +63,7 @@ def find_similar_docs(index_lda, index_bow, new_doc_topics, data):
         sum = sims_lda+(sims_bow*weight)
         sims_sorted = sorted(enumerate(sum), key=lambda item: -item[1])
         return sims_sorted
-    '''
+'''
     sims_lda = index_lda[new_doc_topics]
     sims_bow = index_bow[new_doc_topics]
     scaler = MinMaxScaler(feature_range=(0, 1))
